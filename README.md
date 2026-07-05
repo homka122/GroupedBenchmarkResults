@@ -33,7 +33,7 @@ counts 1, 2, 3, 5, and 10 (`C1`, `C2`, ...).
 
 Each configuration was launched three times. Running time is reported as the arithmetic mean over three successful runs. Memory consumption is reported as the arithmetic mean over the last two successful runs, which reduces the effect of initialization.
 
-The output size is reported as the number of reachable pairs.
+The output size is reported as the number of pairs of reachable vertices.
 
 The following failure markers are used in the tables:
 
@@ -41,11 +41,11 @@ The following failure markers are used in the tables:
 - `OOM` means out of memory. In this experiment, a run was treated as OOM when it started using swap.
 - `-` means that the value cannot be compared, usually because only one of the two variants failed.
 
-## 1. Reachable Pairs
+## 1. Pairs of Reachable Vertices
 
 This metric is the *same* for the grouped and ungrouped variants.
 
-![Number of reachable pairs](analysis/png/homka_bgef_depth_nvals_table.png)
+![Number of pairs of reachable vertices](analysis/png/homka_bgef_depth_nvals_table.png)
 
 Some cells are marked as `OOM`, `OOT`, or `OOM/OOT`. In these configurations the result could not be fully computed under the experimental limits.
 

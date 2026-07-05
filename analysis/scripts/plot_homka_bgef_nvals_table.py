@@ -296,7 +296,7 @@ def plot_table(df: pd.DataFrame, output: Path, small_only: bool) -> None:
                     color=color,
                 )
 
-    fig.suptitle("Amount of reachable pairs", fontsize=16, fontweight="bold", y=0.98)
+    fig.suptitle("Number of pairs of reachable vertices", fontsize=16, fontweight="bold", y=0.98)
     fig.subplots_adjust(left=0.13, right=0.9, top=0.88, bottom=0.2)
     cbar = fig.colorbar(image, ax=ax, shrink=0.78, pad=0.015)
     cbar.set_ticks([0, 0.5, 1])
@@ -305,7 +305,7 @@ def plot_table(df: pd.DataFrame, output: Path, small_only: bool) -> None:
     fig.text(
         0.5,
         0.06,
-        "Cells show the absolute amount of reachable pairs. '-' means the benchmark was not run in this configuration.",
+        "Cells show the absolute number of pairs of reachable vertices. '-' means the benchmark was not run in this configuration.",
         ha="center",
         fontsize=9,
         color="#475569",
