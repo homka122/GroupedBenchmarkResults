@@ -1,15 +1,12 @@
 # Benchmark Analysis
 
-The same experiments were also run on another hardware configuration. See the
-[JLAB benchmark analysis](README_jlab.md) for these results.
-
 ## Environment
 
-- CPU: AMD Ryzen 5 5600
-- RAM: 32GB DDR4
-- OS: Fedora 42
+- CPU: AMD Ryzen 9 7900X
+- RAM: 128GB
+- OS: Ubuntu 24.04.2 LTS
 - Python: 3.11.15
-- GraphBLAS: suitesparse-graphblas 9.4.5.0
+- GraphBLAS: suitesparse-graphblas 8.2.1.0
 
 ## Graphs
 
@@ -40,7 +37,7 @@ The output size is reported as the number of pairs of reachable vertices.
 
 The following failure markers are used in the tables:
 
-- `OOT` means out of time. The timeout threshold is 600 seconds.
+- `OOT` means out of time. The timeout threshold is 1,200 seconds.
 - `OOM` means out of memory. In this experiment, a run was treated as OOM when it started using swap.
 - `-` means that the value cannot be compared, usually because only one of the two variants failed.
 
@@ -48,7 +45,7 @@ The following failure markers are used in the tables:
 
 This metric is the *same* for the grouped and ungrouped variants.
 
-![Number of pairs of reachable vertices](analysis/png/homka_bgef_depth_nvals_table.png)
+![Number of pairs of reachable vertices](analysis_JLAB/png/homka_bgef_depth_nvals_table.png)
 
 Some cells are marked as `OOM`, `OOT`, or `OOM/OOT`. In these configurations the result could not be fully computed under the experimental limits.
 
@@ -57,9 +54,9 @@ Some cells are marked as `OOM`, `OOT`, or `OOM/OOT`. In these configurations the
 The running-time results are shown separately for the grouped and ungrouped variants.
 Each cell contains the mean running time over three successful runs.
 
-![Grouped running time](analysis/png/homka_bgef_depth_grouped_time_table.png)
+![Grouped running time](analysis_JLAB/png/homka_bgef_depth_grouped_time_table.png)
 
-![Ungrouped running time](analysis/png/homka_bgef_depth_not_grouped_time_table.png)
+![Ungrouped running time](analysis_JLAB/png/homka_bgef_depth_not_grouped_time_table.png)
 
 Some configurations cannot be completed within the experimental limits and are marked as `OOM` or `OOT`.
 
@@ -72,7 +69,7 @@ total contexts = C^1 + C^2 + ... + C^D
 where `C` is the number of contexts and `D` is the depth. The figure below
 shows the grouped running-time results ordered by this total number of contexts.
 
-![Grouped running time by total context count](analysis/png/homka_bgef_depth_grouped_time_by_total_contexts.png)
+![Grouped running time by total context count](analysis_JLAB/png/homka_bgef_depth_grouped_time_by_total_contexts.png)
 
 After the absolute running times, we compare the two variants using speedup:
 
@@ -83,19 +80,19 @@ speedup = ungrouped running time / grouped running time
 Values greater than `1x` mean that grouping is faster, while values below `1x`
 mean that grouping introduces overhead.
 
-![Grouped speedup over ungrouped](analysis/png/homka_bgef_depth_grouped_speedup_table.png)
+![Grouped speedup over ungrouped](analysis_JLAB/png/homka_bgef_depth_grouped_speedup_table.png)
 
 Cells marked with `+` are lower bounds. They correspond to configurations where
 the ungrouped variant timed out, while the grouped variant finished
 successfully.
 
 The strongest improvements are observed on the small benchmarks. The maximum
-exact speedups are `223x` for `basic`, `243x` for `collections`, `235x` for
-`cornerCases`, and `259x` for `generalJava`. The `reactor` benchmark also shows
-a substantial improvement, up to `21.9x`.
+exact speedups are `301x` for `basic`, `372x` for `collections`, `254x` for
+`cornerCases`, and `355x` for `generalJava`. The `reactor` benchmark also shows
+a substantial improvement, up to `14.1x`.
 
 On the largest real-world graphs, the improvement is more moderate.
-`org_jivesoftware_openfire` reaches up to `5.1x`, while
+`org_jivesoftware_openfire` reaches an exact speedup of `4.0x`, while
 `com_fasterxml_jackson` and `org_apache_jackrabbit` are closer to `1x` in most
 successful configurations.
 
@@ -113,7 +110,7 @@ ratio between the total number of induced contexts and the number of fields:
 context-field ratio = total contexts / fields
 ```
 
-![Grouped speedup by context-field ratio](analysis/png/homka_bgef_depth_speedup_by_context_field_ratio.png)
+![Grouped speedup by context-field ratio](analysis_JLAB/png/homka_bgef_depth_speedup_by_context_field_ratio.png)
 
 As the context-field ratio grows, the smoothed median speedup also tends to grow.
 
@@ -122,9 +119,9 @@ As the context-field ratio grows, the smoothed median speedup also tends to grow
 Memory usage is shown separately for the grouped and ungrouped variants. Each
 cell contains the mean RAM usage over the last two successful runs.
 
-![Grouped memory usage](analysis/png/homka_bgef_depth_grouped_memory_table.png)
+![Grouped memory usage](analysis_JLAB/png/homka_bgef_depth_grouped_memory_table.png)
 
-![Ungrouped memory usage](analysis/png/homka_bgef_depth_not_grouped_memory_table.png)
+![Ungrouped memory usage](analysis_JLAB/png/homka_bgef_depth_not_grouped_memory_table.png)
 
 As with running time, some configurations cannot be completed under the
 experimental limits and are marked as `OOM` or `OOT`.
@@ -135,7 +132,7 @@ The grouped memory results can also be shown by the total number of contexts:
 total contexts = C^1 + C^2 + ... + C^D
 ```
 
-![Grouped memory usage by total context count](analysis/png/homka_bgef_depth_grouped_memory_by_total_contexts.png)
+![Grouped memory usage by total context count](analysis_JLAB/png/homka_bgef_depth_grouped_memory_by_total_contexts.png)
 
 After the absolute memory values, we compare the two variants using the memory
 ratio:
@@ -147,16 +144,16 @@ memory ratio = ungrouped RAM / grouped RAM
 Values greater than `1x` mean that the grouped variant uses less memory. Values
 below `1x` mean that the grouped variant uses more memory.
 
-![Grouped memory ratio over ungrouped](analysis/png/homka_bgef_depth_grouped_memory_ratio_table.png)
+![Grouped memory ratio over ungrouped](analysis_JLAB/png/homka_bgef_depth_grouped_memory_ratio_table.png)
 
 On the small benchmarks, grouped evaluation can reduce memory usage in the
-hardest configurations, with ratios up to `1.6x`. On `reactor`,
+hardest configurations, with ratios up to `5.3x`. On `reactor`,
 `org_jivesoftware_openfire`, and `com_fasterxml_jackson`, the memory ratio is
 usually close to `1x`, meaning that grouping mainly improves running time rather
 than memory consumption.
 
 The main exception is `org_apache_jackrabbit`. On this benchmark, the grouped
-variant often uses more memory, with the ratio dropping as low as `0.4x`. This
+variant often uses more memory, with the ratio dropping as low as `0.24x`. This
 suggests that grouping may introduce additional intermediate state on large
 graphs where field-related processing and graph size dominate the memory
 footprint.
